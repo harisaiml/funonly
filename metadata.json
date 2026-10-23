@@ -1,0 +1,6 @@
+{
+  "name": "Gay Detector 👀 — Freaky Edition",
+  "description": "A bold, freaky, funny, Gen-Z interactive personality quiz featuring 15 scenario questions, radar scanner, and dramatic vibes reveal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

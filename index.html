@@ -1,0 +1,2999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAY DETECTOR 👀 — Freaky Edition 🌈🔥</title>
+  <meta name="description" content="15 questions. Zero chill. Let's find your vibe. A bold, funny, freaky interactive quiz." />
+  <meta property="og:title" content="GAY DETECTOR 👀 — Freaky Edition 🌈🔥" />
+  <meta property="og:description" content="15 questions. Zero chill. Let's find your vibe. A bold, funny, freaky interactive quiz." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #080711;
+      --bg-midnight: #100b24;
+      --bg-card: rgba(23, 16, 46, 0.72);
+      --bg-card-hover: rgba(36, 25, 73, 0.85);
+      --bg-card-selected: rgba(56, 24, 98, 0.9);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(255, 42, 133, 0.6);
+      
+      --neon-pink: #ff2a85;
+      --neon-pink-bright: #ff55a3;
+      --neon-purple: #a855f7;
+      --neon-purple-dark: #7c3aed;
+      --neon-cyan: #00f0ff;
+      --neon-green: #10b981;
+      --neon-yellow: #fbbf24;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+
+      --rainbow-grad: linear-gradient(135deg, #ff2a85 0%, #a855f7 35%, #00f0ff 70%, #10b981 100%);
+      --fire-grad: linear-gradient(135deg, #ff2a85 0%, #f97316 50%, #fbbf24 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ambient background gradient blobs */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+      animation: floatBlob 16s ease-in-out infinite alternate;
+    }
+    .blob-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, #ff2a85, transparent 70%);
+      animation-duration: 18s;
+    }
+    .blob-2 {
+      width: 600px;
+      height: 600px;
+      bottom: -150px;
+      right: -100px;
+      background: radial-gradient(circle, #7c3aed, transparent 70%);
+      animation-duration: 22s;
+    }
+    .blob-3 {
+      width: 400px;
+      height: 400px;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, #00f0ff, transparent 75%);
+      opacity: 0.18;
+      animation-duration: 14s;
+    }
+
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.15); }
+      100% { transform: translate(-40px, 70px) scale(0.92); }
+    }
+
+    /* Background canvas for stars & sparkles */
+    #ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Confetti canvas for reveal */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* App container */
+    .app-shell {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 1rem 3rem 1rem;
+    }
+
+    /* Top navigation bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(16, 11, 36, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      backdrop-filter: blur(14px);
+      margin-bottom: 2rem;
+    }
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      background: var(--rainbow-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+      cursor: pointer;
+    }
+    .brand-badge {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: rgba(255, 42, 133, 0.2);
+      border: 1px solid rgba(255, 42, 133, 0.4);
+      color: var(--neon-pink-bright);
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      border-radius: 9999px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+    .ctrl-btn.active {
+      background: rgba(255, 42, 133, 0.2);
+      border-color: var(--neon-pink);
+      color: #fff;
+    }
+
+    /* Screen management */
+    .screen {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      width: 100%;
+      flex: 1;
+    }
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Common Card Styles */
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 28px;
+      backdrop-filter: blur(20px);
+      padding: 2.25rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 40%, rgba(255, 42, 133, 0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--rainbow-grad);
+      background-size: 200% 200%;
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: 9999px;
+      padding: 1rem 2.25rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      box-shadow: 0 0 25px rgba(255, 42, 133, 0.5), 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: gradientShift 6s ease infinite;
+      position: relative;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 35px rgba(255, 42, 133, 0.75), 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(1px) scale(0.99);
+    }
+    .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(0.6);
+      box-shadow: none;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 9999px;
+      padding: 0.9rem 1.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* WELCOME SCREEN */
+    .welcome-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: auto 0;
+      padding: 1.5rem 0;
+    }
+    .welcome-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(255, 42, 133, 0.15);
+      border: 1px solid rgba(255, 42, 133, 0.4);
+      color: var(--neon-pink-bright);
+      font-size: 0.825rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: pulseGlow 2.5s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 42, 133, 0.2); }
+      50% { box-shadow: 0 0 25px rgba(255, 42, 133, 0.6); }
+    }
+
+    .welcome-heading-sub {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-mono);
+    }
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 7vw, 4.75rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .rainbow-text {
+      background: var(--rainbow-grad);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s linear infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 42, 133, 0.45));
+    }
+    .welcome-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 2.25rem auto;
+      line-height: 1.6;
+    }
+
+    /* Radar animation widget */
+    .radar-wrapper {
+      position: relative;
+      width: 230px;
+      height: 230px;
+      margin: 0 auto 2.5rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .radar-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 240, 255, 0.25);
+      animation: radarSpinReverse 30s linear infinite;
+      pointer-events: none;
+    }
+    .radar-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 42, 133, 0.2);
+      pointer-events: none;
+    }
+    .radar-circle {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0, 240, 255, 0.35);
+      background: radial-gradient(circle, rgba(20, 13, 44, 0.85) 0%, rgba(8, 7, 17, 0.98) 100%);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.3), inset 0 0 35px rgba(0, 240, 255, 0.2);
+      overflow: hidden;
+    }
+    .radar-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 42, 133, 0.35);
+    }
+    .radar-ring.r1 { width: 33%; height: 33%; }
+    .radar-ring.r2 { width: 66%; height: 66%; }
+    .radar-crosshair-h {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: rgba(0, 240, 255, 0.25);
+    }
+    .radar-crosshair-v {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(0, 240, 255, 0.25);
+    }
+    .radar-sweep {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      transform-origin: 50% 50%;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        #00f0ff 0deg,
+        rgba(0, 240, 255, 0.8) 1.5deg,
+        rgba(168, 85, 247, 0.45) 30deg,
+        rgba(255, 42, 133, 0.2) 60deg,
+        transparent 80deg
+      );
+      animation: radarSpin 2.6s linear infinite;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .radar-center-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 20%, #ff2a85 75%);
+      box-shadow: 0 0 16px #ff2a85, 0 0 28px rgba(255, 42, 133, 0.8);
+      z-index: 10;
+    }
+    .radar-center-dot::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 42, 133, 0.7);
+      animation: centerPulse 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+    .radar-blip {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #00f0ff;
+      box-shadow: 0 0 12px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.6);
+      animation: blipFade 2.4s ease-in-out infinite;
+      z-index: 6;
+    }
+    .radar-blip.b1 { top: 32%; left: 68%; animation-delay: 0.3s; }
+    .radar-blip.b2 { top: 72%; left: 35%; animation-delay: 1.2s; background: #ff55a3; box-shadow: 0 0 12px #ff55a3; }
+    .radar-blip.b3 { top: 25%; left: 30%; animation-delay: 2.1s; background: #fbbf24; box-shadow: 0 0 12px #fbbf24; }
+
+    @keyframes centerPulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+    @keyframes radarSpinReverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes radarSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes blipFade {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .welcome-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .welcome-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--neon-pink);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .disclaimer-banner {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    /* QUIZ SCREEN */
+    .quiz-header {
+      margin-bottom: 1.75rem;
+    }
+    .quiz-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+      font-family: var(--font-mono);
+    }
+    .q-round-tag {
+      font-size: 0.725rem;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      background: rgba(0, 240, 255, 0.14);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      color: var(--neon-cyan);
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+    .q-step-badge {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .q-points-indicator {
+      font-size: 0.85rem;
+      color: var(--neon-pink-bright);
+      background: rgba(255, 42, 133, 0.12);
+      border: 1px solid rgba(255, 42, 133, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--rainbow-grad);
+      background-size: 200% auto;
+      border-radius: 9999px;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 12px rgba(255, 42, 133, 0.75);
+    }
+
+    /* Question Box */
+    .question-title-badge {
+      font-family: var(--font-mono);
+      font-size: 0.825rem;
+      color: var(--neon-purple);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .question-prompt {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 1.75rem;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    /* Option Cards */
+    .answers-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 640px) {
+      .answers-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .answer-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.25rem 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      text-align: left;
+      color: var(--text-main);
+      user-select: none;
+      outline: none;
+    }
+    .answer-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 42, 133, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -6px rgba(255, 42, 133, 0.25);
+    }
+    .answer-card:focus-visible {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.4);
+    }
+    .answer-card.selected {
+      background: var(--bg-card-selected);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 25px rgba(255, 42, 133, 0.4), inset 0 0 15px rgba(255, 42, 133, 0.15);
+      transform: translateY(-2px) scale(1.01);
+    }
+    .answer-card.selected .card-letter {
+      background: var(--neon-pink);
+      color: #fff;
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 12px var(--neon-pink);
+    }
+
+    .card-letter {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.95rem;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      margin-top: 2px;
+    }
+    .card-content {
+      flex: 1;
+    }
+    .card-text {
+      font-size: 1.025rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #f1f5f9;
+    }
+    .card-check {
+      margin-left: auto;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--neon-pink-bright);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .answer-card.selected .card-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Quiz Bottom Actions */
+    .quiz-bottom-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .nav-left-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .nav-right-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-left: auto;
+    }
+    .btn-skip {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-skip:hover {
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* DRAMATIC REVEAL & SCANNER SCREEN */
+    .reveal-card {
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .scan-radar {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin-bottom: 2rem;
+    }
+    .countdown-number {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 35px var(--neon-pink);
+      animation: countPulse 1s ease-in-out infinite;
+      z-index: 5;
+    }
+    @keyframes countPulse {
+      0% { transform: scale(0.7); opacity: 0.3; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.5; }
+    }
+    .analyzing-text {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--rainbow-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      animation: gradientShift 4s ease infinite;
+    }
+    .analyzing-sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-family: var(--font-mono);
+    }
+
+    /* FINAL RESULT SCREEN */
+    .result-container {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .result-badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--neon-cyan);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    
+    .rainbow-border-box {
+      position: relative;
+      border-radius: 32px;
+      padding: 3px;
+      background: var(--rainbow-grad);
+      background-size: 300% 300%;
+      animation: gradientShift 5s ease infinite;
+      box-shadow: 0 0 50px rgba(255, 42, 133, 0.4), 0 20px 40px rgba(0, 0, 0, 0.8);
+      margin-bottom: 2rem;
+    }
+    .result-inner-card {
+      background: #0f0a21;
+      border-radius: 29px;
+      padding: 2.75rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-emoji-hero {
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 1rem;
+      animation: bounceHero 2s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes bounceHero {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.08); }
+    }
+
+    .result-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      line-height: 1.1;
+    }
+    .result-title.straight {
+      color: #34d399;
+      text-shadow: 0 0 25px rgba(52, 211, 153, 0.5);
+    }
+    .result-title.middle {
+      color: #c084fc;
+      text-shadow: 0 0 25px rgba(192, 132, 252, 0.5);
+    }
+    .result-title.gay {
+      color: #ff55a3;
+      text-shadow: 0 0 30px rgba(255, 85, 163, 0.65);
+    }
+
+    .score-summary-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      padding: 0.5rem 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Percentage Meter Gauge */
+    .meter-container {
+      margin: 1.5rem auto 2rem auto;
+      max-width: 440px;
+    }
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .meter-bar-track {
+      height: 16px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px;
+    }
+    .meter-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: var(--rainbow-grad);
+      background-size: 200% auto;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 15px rgba(255, 42, 133, 0.8);
+      position: relative;
+    }
+    .meter-percentage-text {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      margin-top: 0.5rem;
+    }
+
+    .result-description {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: #e2e8f0;
+      max-width: 580px;
+      margin: 0 auto 1.75rem auto;
+    }
+
+    .result-disclaimer {
+      font-size: 0.825rem;
+      line-height: 1.5;
+      color: var(--text-dim);
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Fun Vibe Breakdown Stats */
+    .vibe-breakdown-card {
+      margin-top: 2rem;
+      background: rgba(16, 11, 36, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .breakdown-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--neon-cyan);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .breakdown-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 1rem;
+    }
+    .breakdown-item-header {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+    .breakdown-item-val {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* MODAL STYLES */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 3, 10, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #140d2e;
+      border: 1px solid rgba(255, 42, 133, 0.4);
+      border-radius: 28px;
+      padding: 2.25rem 2rem;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 42, 133, 0.3);
+      position: relative;
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.open .modal-content {
+      transform: scale(1) translateY(0);
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .modal-body {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+    .modal-body p {
+      margin-bottom: 0.85rem;
+    }
+    .modal-body strong {
+      color: #fff;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-pill {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: #181034;
+      border: 1px solid var(--neon-pink);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 42, 133, 0.5);
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 10001;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toast-pill.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Accessibility reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .blob, .radar-sweep, .btn-primary {
+        animation: none !important;
+      }
+    }
+
+    /* Mobile and Touch Screen Optimizations */
+    @media (max-width: 640px) {
+      html, body {
+        -webkit-text-size-adjust: 100%;
+      }
+      .app-shell {
+        padding: 0.65rem 0.65rem max(1.75rem, env(safe-area-inset-bottom)) 0.65rem;
+      }
+      .top-bar {
+        padding: 0.45rem 0.75rem;
+        margin-bottom: 1.25rem;
+        gap: 0.5rem;
+      }
+      .brand-mini {
+        font-size: clamp(0.85rem, 3.8vw, 1rem);
+      }
+      .brand-badge {
+        font-size: 0.575rem;
+        padding: 0.1rem 0.35rem;
+      }
+      .ctrl-btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      /* Welcome Screen Mobile */
+      .welcome-container {
+        padding: 0.5rem 0 1.25rem 0;
+      }
+      .welcome-pill {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.75rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .welcome-heading-sub {
+        font-size: 0.95rem;
+        margin-bottom: 0.35rem;
+      }
+      .welcome-title {
+        font-size: clamp(2.1rem, 9.5vw, 3.25rem);
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.02em;
+      }
+      .welcome-subtitle {
+        font-size: 0.95rem;
+        padding: 0 0.5rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+      .radar-wrapper {
+        width: 190px;
+        height: 190px;
+        margin-bottom: 1.75rem;
+      }
+      .welcome-tagline {
+        font-size: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      .welcome-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 0.9rem 1.25rem;
+        font-size: 1rem;
+      }
+      .disclaimer-banner {
+        font-size: 0.725rem;
+        padding: 0.5rem 0.75rem;
+      }
+
+      /* Quiz Screen Mobile */
+      .quiz-header {
+        margin-bottom: 1.25rem;
+      }
+      .quiz-meta-row {
+        gap: 0.5rem;
+        margin-bottom: 0.65rem;
+      }
+      .q-step-badge {
+        font-size: 0.85rem;
+      }
+      .q-round-tag {
+        font-size: 0.675rem;
+        padding: 0.15rem 0.5rem;
+      }
+      .q-points-indicator {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.55rem;
+      }
+
+      .glass-card {
+        padding: 1.25rem 1rem;
+        border-radius: 20px;
+      }
+      .question-title-badge {
+        font-size: 0.725rem;
+        margin-bottom: 0.4rem;
+      }
+      .question-prompt {
+        font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+        line-height: 1.35;
+        margin-bottom: 1.25rem;
+        word-break: break-word;
+      }
+
+      /* Answers Grid Mobile */
+      .answers-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        margin-bottom: 1.5rem;
+      }
+      .answer-card {
+        padding: 0.85rem 0.95rem;
+        border-radius: 16px;
+        min-height: 52px;
+        gap: 0.75rem;
+      }
+      .answer-card:active {
+        transform: scale(0.98);
+        background: var(--bg-card-hover);
+      }
+      .card-letter {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 0.825rem;
+        border-radius: 8px;
+        margin-top: 1px;
+      }
+      .card-text {
+        font-size: 0.925rem;
+        line-height: 1.4;
+      }
+      .card-check {
+        font-size: 1rem;
+      }
+
+      /* Quiz Bottom Actions Mobile */
+      .quiz-bottom-actions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+        padding-top: 0.85rem;
+      }
+      .nav-left-group {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .nav-left-group .btn-secondary,
+      .nav-left-group .btn-skip {
+        flex: 1;
+        padding: 0.7rem 0.5rem;
+        font-size: 0.8rem;
+        justify-content: center;
+        text-align: center;
+      }
+      .nav-right-group {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+      }
+      .nav-right-group #quiz-restart-trigger {
+        padding: 0.85rem 0.95rem;
+        font-size: 0.825rem;
+        flex-shrink: 0;
+        width: auto;
+      }
+      .nav-right-group .btn-primary {
+        flex: 1;
+        width: 100%;
+        padding: 0.85rem 1rem;
+        font-size: 0.975rem;
+      }
+
+      /* Scanner Screen Mobile */
+      .reveal-card {
+        padding: 2.5rem 1rem;
+      }
+      .scan-radar {
+        width: 190px;
+        height: 190px;
+        margin-bottom: 1.5rem;
+      }
+      .countdown-number {
+        font-size: 3.75rem;
+      }
+      .analyzing-text {
+        font-size: 1.35rem;
+      }
+      .analyzing-sub {
+        font-size: 0.875rem;
+      }
+
+      /* Result Screen Mobile */
+      .rainbow-border-box {
+        border-radius: 24px;
+        padding: 2px;
+        margin-bottom: 1.5rem;
+      }
+      .result-inner-card {
+        padding: 1.5rem 1rem;
+        border-radius: 22px;
+      }
+      .result-emoji-hero {
+        font-size: 3.25rem;
+        margin-bottom: 0.5rem;
+      }
+      .result-title {
+        font-size: clamp(1.65rem, 7vw, 2.35rem);
+        margin-bottom: 0.5rem;
+      }
+      .score-summary-pill {
+        font-size: 0.95rem;
+        padding: 0.35rem 0.95rem;
+        margin-bottom: 1rem;
+      }
+      .meter-container {
+        margin: 1rem auto 1.25rem auto;
+      }
+      .meter-labels {
+        font-size: 0.65rem;
+      }
+      .meter-percentage-text {
+        font-size: 0.875rem;
+      }
+      .result-description {
+        font-size: 0.95rem;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+      }
+      .result-disclaimer {
+        font-size: 0.75rem;
+        padding: 0.75rem 0.85rem;
+        border-radius: 14px;
+      }
+      .vibe-breakdown-card {
+        padding: 1.15rem 1rem;
+        border-radius: 20px;
+        margin-top: 1.5rem;
+      }
+      .breakdown-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+      .breakdown-item {
+        padding: 0.75rem 0.9rem;
+        border-radius: 12px;
+      }
+      .breakdown-item-val {
+        font-size: 1.05rem;
+      }
+      .result-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+        margin-top: 1.5rem;
+      }
+      .result-actions button {
+        width: 100%;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.975rem;
+      }
+
+      /* Modals on Mobile */
+      .modal-overlay {
+        padding: 0.75rem;
+      }
+      .modal-content {
+        padding: 1.5rem 1.15rem;
+        border-radius: 22px;
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .modal-title {
+        font-size: 1.25rem;
+      }
+      .modal-body {
+        font-size: 0.875rem;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+      }
+      .toast-pill {
+        width: calc(100% - 2rem);
+        max-width: 380px;
+        font-size: 0.825rem;
+        padding: 0.65rem 1rem;
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    /* Small Mobile (e.g. iPhone SE / 320px - 375px) */
+    @media (max-width: 380px) {
+      .brand-badge {
+        display: none;
+      }
+      #sound-label {
+        display: none;
+      }
+      .top-bar {
+        padding: 0.4rem 0.65rem;
+      }
+      .question-prompt {
+        font-size: 1.1rem;
+      }
+      .card-text {
+        font-size: 0.875rem;
+      }
+      .radar-wrapper {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient blur blobs -->
+  <div class="ambient-glow" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Background Canvas for interactive stars/sparkles -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Canvas for celebration confetti -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- App Shell -->
+  <main class="app-shell" id="main-content">
+
+    <!-- Top Navigation Header -->
+    <header class="top-bar">
+      <div class="brand-mini" id="nav-brand" role="button" tabindex="0" title="Back to Start">
+        <span>GAY DETECTOR 👀</span>
+        <span class="brand-badge">FREAKY ED.</span>
+      </div>
+      <div class="top-controls">
+        <button type="button" class="ctrl-btn" id="sound-toggle" aria-label="Toggle Sound Effects" title="Sound Effects (Web Audio)">
+          <span id="sound-icon">🔇</span>
+          <span id="sound-label">Sound OFF</span>
+        </button>
+        <button type="button" class="ctrl-btn" id="faq-btn" aria-label="How it works and FAQ">
+          ℹ️ Info
+        </button>
+      </div>
+    </header>
+
+    <!-- 1. WELCOME SCREEN -->
+    <section class="screen active" id="welcome-screen" aria-labelledby="welcome-title">
+      <div class="welcome-container">
+        
+        <div class="welcome-pill">
+          ✨ 45+ SCENARIO POOL • FRESH QUESTIONS EVERY GAME • ZERO CHILL
+        </div>
+
+        <div class="welcome-heading-sub">HOW SUS IS YOUR VIBE? 👀</div>
+        
+        <h1 class="welcome-title" id="welcome-title">
+          <span class="rainbow-text">GAY DETECTOR 🌈</span>
+        </h1>
+        
+        <p class="welcome-subtitle">
+          Answer honestly. 15 randomized scenarios per run drawn from an expansive 45+ scenario deck. Fresh questions every game!
+        </p>
+
+        <!-- Animated Neon Radar -->
+        <div class="radar-wrapper" aria-hidden="true">
+          <div class="radar-circle">
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-crosshair-h"></div>
+            <div class="radar-crosshair-v"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-center-dot"></div>
+            <div class="radar-blip b1"></div>
+            <div class="radar-blip b2"></div>
+            <div class="radar-blip b3"></div>
+          </div>
+        </div>
+
+        <div class="welcome-tagline">
+          15 SCENARIOS PER RUN • ROTATING QUESTIONS • REVEAL 🔥
+        </div>
+
+        <div class="welcome-actions">
+          <button type="button" class="btn-primary" id="start-quiz-btn">
+            LET'S FIND OUT 🔥
+          </button>
+          <button type="button" class="btn-secondary" id="how-it-works-btn">
+            HOW IT WORKS 💡
+          </button>
+        </div>
+
+        <div class="disclaimer-banner">
+          ⚠️ <strong>Disclaimer:</strong> Just for fun — this quiz is a playful entertainment experience and cannot determine your actual sexuality.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. QUIZ SCREEN -->
+    <section class="screen" id="quiz-screen" aria-label="Quiz Questionnaire">
+      <div class="quiz-header">
+        <div class="quiz-meta-row">
+          <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+            <span class="q-round-tag" id="q-round-tag">ROUND 1</span>
+            <div class="q-step-badge" id="question-step-text">
+              <span>SCENARIO</span>
+              <strong id="current-q-num">01</strong>
+              <span>/</span>
+              <span>15</span>
+            </div>
+          </div>
+          <div class="q-points-indicator" id="q-points-display" title="Accumulated quiz points">
+            <span>⚡ Points:</span>
+            <strong id="current-points-val">0</strong>
+          </div>
+        </div>
+        <!-- Progress bar -->
+        <div class="progress-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="15" id="progress-bar-container">
+          <div class="progress-fill" id="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <article class="glass-card" id="active-question-card">
+        <div class="question-title-badge">
+          <span>🎯 SCENARIO</span>
+          <span id="scenario-topic">THE BEST FRIEND SITUATION</span>
+        </div>
+        
+        <h2 class="question-prompt" id="question-prompt-text">
+          Loading scenario...
+        </h2>
+
+        <!-- Answers Grid -->
+        <div class="answers-grid" id="answers-container" role="radiogroup" aria-labelledby="question-prompt-text">
+          <!-- Dynamically populated 4 options -->
+        </div>
+
+        <!-- Quiz Navigation / Controls -->
+        <div class="quiz-bottom-actions">
+          <div class="nav-left-group">
+            <button type="button" class="btn-secondary" id="quiz-back-btn" disabled>
+              ← BACK
+            </button>
+            <button type="button" class="btn-skip" id="quiz-skip-btn" title="Skip this scenario">
+              Skip Scenario ⏭️
+            </button>
+          </div>
+
+          <div class="nav-right-group">
+            <button type="button" class="btn-secondary" id="quiz-restart-trigger" title="Restart Quiz">
+              🔄 Reset
+            </button>
+            <button type="button" class="btn-primary" id="quiz-next-btn" disabled>
+              NEXT QUESTION →
+            </button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 3. DRAMATIC SCANNER SCREEN -->
+    <section class="screen" id="scanner-screen" aria-label="Analyzing Vibes Screen">
+      <div class="glass-card reveal-card">
+        <div class="scan-radar" aria-hidden="true">
+          <div class="radar-circle" style="box-shadow: 0 0 50px rgba(255, 42, 133, 0.5);">
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-crosshair-h"></div>
+            <div class="radar-crosshair-v"></div>
+            <div class="radar-sweep" style="animation-duration: 1.2s;"></div>
+            <div class="radar-center-dot"></div>
+          </div>
+          <div class="countdown-number" id="countdown-display">3</div>
+        </div>
+
+        <h2 class="analyzing-text" id="scanner-headline">ANALYZING YOUR VIBES... 📡👀</h2>
+        <p class="analyzing-sub" id="scanner-subtext">Calibrating gay-dar algorithms and rainbow frequency...</p>
+      </div>
+    </section>
+
+    <!-- 4. FINAL RESULT SCREEN -->
+    <section class="screen" id="result-screen" aria-label="Final Result">
+      <div class="result-container">
+        
+        <div class="result-badge-top">
+          ✨ FINAL VIBE REVEAL • OFFICIAL REPORT ✨
+        </div>
+
+        <div class="rainbow-border-box">
+          <div class="result-inner-card">
+            <div class="result-emoji-hero" id="result-emoji">🩷</div>
+            
+            <h2 class="result-title" id="result-title-text">GAY VIBES 🩷</h2>
+
+            <div class="score-summary-pill" id="score-pill">
+              <span>SCORE:</span>
+              <strong id="final-score-val">38</strong>
+              <span>/ 45 PTS</span>
+            </div>
+
+            <!-- Percentage Meter Gauge -->
+            <div class="meter-container">
+              <div class="meter-labels">
+                <span>0 PTS (CHILL)</span>
+                <span>22 PTS (BALANCED)</span>
+                <span>45 PTS (MAX SUS)</span>
+              </div>
+              <div class="meter-bar-track">
+                <div class="meter-bar-fill" id="meter-fill"></div>
+              </div>
+              <div class="meter-percentage-text" id="meter-percent-label">84% Vibe Intensity</div>
+            </div>
+
+            <p class="result-description" id="result-desc-text">
+              The rainbow radar is going wild! Your answers landed in the high end of this quiz's scale. Your score is just for fun, not a verdict on your identity.
+            </p>
+
+            <div class="result-disclaimer">
+              💡 <strong>Real Talk:</strong> These labels represent the quiz's playful scoring categories, not a reliable conclusion about a person's sexual orientation. Some people are bisexual, pansexual, asexual, questioning, or identify in other ways that these three labels cannot capture.
+            </div>
+          </div>
+        </div>
+
+        <!-- Fun Breakdown Cards -->
+        <div class="vibe-breakdown-card">
+          <div class="breakdown-title">
+            <span>📊 SCENARIO RADAR BREAKDOWN</span>
+          </div>
+          <div class="breakdown-grid">
+            <div class="breakdown-item">
+              <div class="breakdown-item-header">Questions Answered</div>
+              <div class="breakdown-item-val" id="stat-answered">15 / 15</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-item-header">Attraction Radar</div>
+              <div class="breakdown-item-val" id="stat-attraction">Off The Charts 🔥</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-item-header">Bro-Mance Index</div>
+              <div class="breakdown-item-val" id="stat-bromance">High Voltage ⚡</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="result-actions">
+          <button type="button" class="btn-primary" id="share-result-btn">
+            SHARE RESULT 📲
+          </button>
+          <button type="button" class="btn-secondary" id="play-again-btn">
+            PLAY NEXT ROUND (NEW SCENARIOS) 🔄
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: HOW IT WORKS & FAQ -->
+  <div class="modal-overlay" id="how-modal" role="dialog" aria-modal="true" aria-labelledby="modal-how-title">
+    <div class="modal-content">
+      <button type="button" class="modal-close-btn" id="close-how-modal" aria-label="Close modal">✕</button>
+      <h3 class="modal-title" id="modal-how-title">
+        <span>🌈 How Gay Detector Works</span>
+      </h3>
+      <div class="modal-body">
+        <p>
+          Welcome to the <strong>Freaky Edition</strong>! Here is everything you need to know:
+        </p>
+        <p>
+          🎯 <strong>15 Scenarios Per Round:</strong> Each run presents 15 randomized scenarios with 4 choices worth <strong>0, 1, 2, or 3 points</strong>.
+        </p>
+        <p>
+          🔄 <strong>45+ Rotating Scenario Pool:</strong> The question deck changes every single game! When you complete a run and click <em>Play Next Round</em>, the engine draws 15 fresh, non-repeating questions from the pool.
+        </p>
+        <p>
+          📈 <strong>Scoring Bands:</strong><br>
+          • <strong>0–14 points:</strong> STRAIGHT VIBES 💚<br>
+          • <strong>15–29 points:</strong> MIDDLE / EXPLORING VIBES 💜<br>
+          • <strong>30–45 points:</strong> GAY VIBES 🩷
+        </p>
+        <p>
+          🔒 <strong>100% Private:</strong> All your answers remain purely inside your own browser session. No data is stored or uploaded to any server.
+        </p>
+        <p>
+          ⚠️ <strong>Strictly Entertainment:</strong> This is a satirical, lighthearted quiz designed for laughs with friends. Real sexual orientation is diverse, nuanced, and only you determine who you are!
+        </p>
+      </div>
+      <button type="button" class="btn-primary" style="width: 100%;" id="modal-got-it-btn">
+        GOT IT, LET'S GO 🔥
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: RESTART CONFIRMATION -->
+  <div class="modal-overlay" id="restart-modal" role="dialog" aria-modal="true" aria-labelledby="modal-restart-title">
+    <div class="modal-content">
+      <button type="button" class="modal-close-btn" id="close-restart-modal" aria-label="Close modal">✕</button>
+      <h3 class="modal-title" id="modal-restart-title">
+        <span>🔄 Restart Quiz?</span>
+      </h3>
+      <div class="modal-body">
+        <p>Are you sure you want to start over? All your current scenario answers and accumulated points will be reset.</p>
+      </div>
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button type="button" class="btn-secondary" id="cancel-restart-btn">Keep Playing</button>
+        <button type="button" class="btn-primary" id="confirm-restart-btn">Yes, Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-pill" id="toast-pill" role="status" aria-live="polite">
+    <span id="toast-icon">✨</span>
+    <span id="toast-msg">Result copied to clipboard!</span>
+  </div>
+
+  <script>
+    /* =========================================================
+       GAY DETECTOR — FREAKY EDITION (SINGLE FILE JS ENGINE)
+       ========================================================= */
+
+    // Web Audio Sound Synthesizer (Zero External Assets)
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggle() {
+        this.enabled = !this.enabled;
+        if (this.enabled) {
+          this.init();
+          this.playClick();
+        }
+        return this.enabled;
+      }
+
+      playTone(freq, type, duration, gainVal = 0.15) {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+          // Audio error fallback
+        }
+      }
+
+      playClick() {
+        this.playTone(600, 'sine', 0.08, 0.1);
+      }
+
+      playSelect() {
+        if (!this.enabled || !this.ctx) return;
+        this.playTone(523.25, 'triangle', 0.1, 0.12);
+        setTimeout(() => this.playTone(659.25, 'triangle', 0.15, 0.12), 60);
+      }
+
+      playNext() {
+        this.playTone(440, 'sine', 0.1, 0.1);
+        setTimeout(() => this.playTone(880, 'sine', 0.15, 0.12), 70);
+      }
+
+      playCountTick() {
+        this.playTone(350, 'sawtooth', 0.12, 0.08);
+      }
+
+      playFanfare() {
+        if (!this.enabled || !this.ctx) return;
+        const notes = [440, 554.37, 659.25, 880, 1108.73];
+        notes.forEach((note, idx) => {
+          setTimeout(() => {
+            this.playTone(note, 'sine', 0.35, 0.15);
+          }, idx * 120);
+        });
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    // 45 Scenario-based Questions Data Bank (Rotates Every Game)
+    const RAW_QUESTIONS = [
+      {
+        id: 1,
+        topic: "The Best Friend Situation",
+        prompt: "Your bro walks out of the shower looking unfairly good. What's your first thought?",
+        answers: [
+          { letter: "A", text: "“Bro, where's my controller?”", score: 0 },
+          { letter: "B", text: "“Okay, man's looking fresh.”", score: 1 },
+          { letter: "C", text: "“WHY IS HE ACTUALLY THAT FINE?!”", score: 2 },
+          { letter: "D", text: "“I need a minute to process those feelings.”", score: 3 }
+        ]
+      },
+      {
+        id: 2,
+        topic: "The Compliment Trap",
+        prompt: "A ridiculously attractive guy compliments your outfit and holds eye contact. You…",
+        answers: [
+          { letter: "A", text: "Say thanks and move on.", score: 0 },
+          { letter: "B", text: "Smile because the compliment made your day.", score: 1 },
+          { letter: "C", text: "Get nervous and replay the moment later.", score: 2 },
+          { letter: "D", text: "Immediately start imagining a romantic scenario.", score: 3 }
+        ]
+      },
+      {
+        id: 3,
+        topic: "The Party Scenario",
+        prompt: "At a party, an attractive guy asks if you're single. What's the reaction?",
+        answers: [
+          { letter: "A", text: "Answer casually and continue the conversation.", score: 0 },
+          { letter: "B", text: "Wonder why he's asking.", score: 1 },
+          { letter: "C", text: "Get flustered but stay and talk.", score: 2 },
+          { letter: "D", text: "Flirt back because you're genuinely interested.", score: 3 }
+        ]
+      },
+      {
+        id: 4,
+        topic: "The Accidental Eye Contact",
+        prompt: "You make eye contact with a handsome stranger across the room. It lasts three seconds.",
+        answers: [
+          { letter: "A", text: "Look away without thinking about it.", score: 0 },
+          { letter: "B", text: "Notice that he's attractive.", score: 1 },
+          { letter: "C", text: "Look back to see if he's looking again.", score: 2 },
+          { letter: "D", text: "Hope he comes over and introduces himself.", score: 3 }
+        ]
+      },
+      {
+        id: 5,
+        topic: "The Late-Night Text",
+        prompt: "A guy you find attractive texts, ‘You awake? 👀’ at 1 AM.",
+        answers: [
+          { letter: "A", text: "Reply only if there's something practical to discuss.", score: 0 },
+          { letter: "B", text: "Ask what's up.", score: 1 },
+          { letter: "C", text: "Get excited and respond immediately.", score: 2 },
+          { letter: "D", text: "Flirt back because you want the conversation to go somewhere.", score: 3 }
+        ]
+      },
+      {
+        id: 6,
+        topic: "The Romantic Movie",
+        prompt: "You're watching a romantic movie, and the male lead is ridiculously handsome.",
+        answers: [
+          { letter: "A", text: "Focus on the plot.", score: 0 },
+          { letter: "B", text: "Appreciate the character's appearance.", score: 1 },
+          { letter: "C", text: "Find yourself paying more attention to him than the plot.", score: 2 },
+          { letter: "D", text: "Imagine yourself as his romantic partner.", score: 3 }
+        ]
+      },
+      {
+        id: 7,
+        topic: "The Gym Encounter",
+        prompt: "A cute guy at the gym asks if you want to share a bench.",
+        answers: [
+          { letter: "A", text: "Say yes or no based on your workout.", score: 0 },
+          { letter: "B", text: "Notice that he's cute and carry on.", score: 1 },
+          { letter: "C", text: "Get unusually conscious of how you look.", score: 2 },
+          { letter: "D", text: "Hope he sticks around so you can get to know him.", score: 3 }
+        ]
+      },
+      {
+        id: 8,
+        topic: "The Compliment Challenge",
+        prompt: "Your friends challenge you to compliment an attractive guy.",
+        answers: [
+          { letter: "A", text: "Give a friendly compliment without overthinking it.", score: 0 },
+          { letter: "B", text: "Compliment his shoes or haircut.", score: 1 },
+          { letter: "C", text: "Get nervous because you genuinely find him attractive.", score: 2 },
+          { letter: "D", text: "Give him a bold, flirty compliment.", score: 3 }
+        ]
+      },
+      {
+        id: 9,
+        topic: "The Dream Date",
+        prompt: "You get to plan a perfect date with someone you genuinely find attractive.",
+        answers: [
+          { letter: "A", text: "My answer depends on the person I'm attracted to.", score: 0 },
+          { letter: "B", text: "A casual coffee date sounds good.", score: 1 },
+          { letter: "C", text: "I'd want a romantic atmosphere and real chemistry.", score: 2 },
+          { letter: "D", text: "I already have a whole romantic itinerary planned.", score: 3 }
+        ]
+      },
+      {
+        id: 10,
+        topic: "The Unexpected Confession",
+        prompt: "A close male friend tells you he has a crush on you.",
+        answers: [
+          { letter: "A", text: "Kindly explain that you don't feel the same, if that's true.", score: 0 },
+          { letter: "B", text: "Feel surprised and ask him more about it.", score: 1 },
+          { letter: "C", text: "Feel excited because you might like him too.", score: 2 },
+          { letter: "D", text: "Admit that you've secretly been interested in him.", score: 3 }
+        ]
+      },
+      {
+        id: 11,
+        topic: "The Celebrity Crush",
+        prompt: "Your friends ask which celebrity you would most want to date.",
+        answers: [
+          { letter: "A", text: "I'd choose based on whoever I'm attracted to.", score: 0 },
+          { letter: "B", text: "Name a celebrity I find good-looking.", score: 1 },
+          { letter: "C", text: "Pick a handsome male celebrity and explain why.", score: 2 },
+          { letter: "D", text: "Give a full speech about my dream celebrity boyfriend.", score: 3 }
+        ]
+      },
+      {
+        id: 12,
+        topic: "The Flirting Challenge",
+        prompt: "Someone attractive gives you a playful wink at a café.",
+        answers: [
+          { letter: "A", text: "Smile politely and continue what I'm doing.", score: 0 },
+          { letter: "B", text: "Wonder whether it was intentional.", score: 1 },
+          { letter: "C", text: "Wink back if I'm interested.", score: 2 },
+          { letter: "D", text: "Walk over and start a flirty conversation.", score: 3 }
+        ]
+      },
+      {
+        id: 13,
+        topic: "The Vacation Roommate",
+        prompt: "You're sharing a holiday house with a guy you find attractive.",
+        answers: [
+          { letter: "A", text: "Treat it like a normal holiday.", score: 0 },
+          { letter: "B", text: "Enjoy having good company.", score: 1 },
+          { letter: "C", text: "Hope you get more opportunities to spend time together.", score: 2 },
+          { letter: "D", text: "Secretly hope the chemistry becomes something romantic.", score: 3 }
+        ]
+      },
+      {
+        id: 14,
+        topic: "The Relationship Question",
+        prompt: "If you imagined a future romantic relationship, which possibility feels most appealing to you right now?",
+        answers: [
+          { letter: "A", text: "A woman.", score: 0 },
+          { letter: "B", text: "It depends; I could imagine different possibilities.", score: 1 },
+          { letter: "C", text: "A man, or possibly more than one gender.", score: 2 },
+          { letter: "D", text: "A man, and that genuinely reflects my romantic attraction.", score: 3 }
+        ]
+      },
+      {
+        id: 15,
+        topic: "The Final Reveal",
+        prompt: "Forget what your friends think. Who can you genuinely imagine being romantically or physically attracted to?",
+        answers: [
+          { letter: "A", text: "Women.", score: 0 },
+          { letter: "B", text: "I'm unsure, curious, or still figuring it out.", score: 1 },
+          { letter: "C", text: "More than one gender, or it depends on the person.", score: 2 },
+          { letter: "D", text: "Men.", score: 3 }
+        ]
+      },
+      {
+        id: 16,
+        topic: "The Borrowed Hoodie",
+        prompt: "Your handsome gym buddy leaves his oversized vintage hoodie at your place. What do you do?",
+        answers: [
+          { letter: "A", text: "Leave it folded by the door until he asks for it.", score: 0 },
+          { letter: "B", text: "Put it in the wash so it's clean when he comes back.", score: 1 },
+          { letter: "C", text: "Try it on once in front of the mirror just to see the fit.", score: 2 },
+          { letter: "D", text: "Wear it all evening, sniff the collar, and feel fuzzy inside.", score: 3 }
+        ]
+      },
+      {
+        id: 17,
+        topic: "The Beach Sunscreen",
+        prompt: "At the beach, a shredded guy asks if you can help him apply sunscreen on his back shoulders.",
+        answers: [
+          { letter: "A", text: "Hand him the spray bottle and say 'do your best, king'.", score: 0 },
+          { letter: "B", text: "Help him quickly and rinse your hands in the ocean.", score: 1 },
+          { letter: "C", text: "Get unusually focused on getting even coverage while sweating.", score: 2 },
+          { letter: "D", text: "This is officially the cinematic highlight of my entire summer.", score: 3 }
+        ]
+      },
+      {
+        id: 18,
+        topic: "The Barber Fade",
+        prompt: "Your barber gets intimately close to line up your beard, looks into your eyes, and whispers 'Looking dangerous, bro'.",
+        answers: [
+          { letter: "A", text: "Say 'thanks, man' and check the sideburns.", score: 0 },
+          { letter: "B", text: "Tip him extra because the taper fade is genuinely clean.", score: 1 },
+          { letter: "C", text: "Blush behind the barber cape and pray he doesn't notice.", score: 2 },
+          { letter: "D", text: "Book weekly appointments regardless of whether your hair has grown.", score: 3 }
+        ]
+      },
+      {
+        id: 19,
+        topic: "The Close Friends Story",
+        prompt: "An attractive guy adds you to his Close Friends story with a shirtless post-workout mirror selfie.",
+        answers: [
+          { letter: "A", text: "Swipe to the next story without thinking twice.", score: 0 },
+          { letter: "B", text: "Tap the like button to show gym bro solidarity.", score: 1 },
+          { letter: "C", text: "Re-watch the story twice to inspect his shoulder routine.", score: 2 },
+          { letter: "D", text: "Immediately reply with the flame emoji and wait by the screen.", score: 3 }
+        ]
+      },
+      {
+        id: 20,
+        topic: "The Elevator Trap",
+        prompt: "You get stuck in an elevator for 20 minutes with a gorgeous stranger who smells like sandalwood and vanilla.",
+        answers: [
+          { letter: "A", text: "Press the emergency call button and wait patiently.", score: 0 },
+          { letter: "B", text: "Make small talk about how bad elevator maintenance is.", score: 1 },
+          { letter: "C", text: "Appreciate his cologne and secretly hope rescue takes a little while.", score: 2 },
+          { letter: "D", text: "Script the entire rom-com meet-cute wedding vows right there.", score: 3 }
+        ]
+      },
+      {
+        id: 21,
+        topic: "The Gym Spotter",
+        prompt: "You're struggling on your bench press PR and a buff guy rushes over, grips the bar, and yells 'PUSH, YOU GOT THIS!'",
+        answers: [
+          { letter: "A", text: "Rack the bar and give him a polite fist bump.", score: 0 },
+          { letter: "B", text: "Thank him for saving your chest from being crushed.", score: 1 },
+          { letter: "C", text: "Feel an instant surge of adrenaline and sudden heart flutters.", score: 2 },
+          { letter: "D", text: "Suddenly want to fail every heavy set so he comes back over.", score: 3 }
+        ]
+      },
+      {
+        id: 22,
+        topic: "The Festival Moshpit",
+        prompt: "In a chaotic concert crowd, a cute guy takes your hand firmly so you don't get separated, smiling at you.",
+        answers: [
+          { letter: "A", text: "Let go once you reach open space and say thanks.", score: 0 },
+          { letter: "B", text: "Keep jumping and dancing near him because the energy is good.", score: 1 },
+          { letter: "C", text: "Notice how warm his hands are and hope you don't let go.", score: 2 },
+          { letter: "D", text: "Forget who is performing on stage — he's the headliner now.", score: 3 }
+        ]
+      },
+      {
+        id: 23,
+        topic: "The Shared Umbrella",
+        prompt: "It starts pouring rain and a handsome guy with a big umbrella asks if you want to walk under it together.",
+        answers: [
+          { letter: "A", text: "Walk two blocks, thank him politely, and turn down your street.", score: 0 },
+          { letter: "B", text: "Enjoy not being soaked and joke about the thunderstorm.", score: 1 },
+          { letter: "C", text: "Walk close so your shoulders brush, feeling distinct butterflies.", score: 2 },
+          { letter: "D", text: "Secretly hope your destination is five miles away in the rain.", score: 3 }
+        ]
+      },
+      {
+        id: 24,
+        topic: "The Karaoke Duet",
+        prompt: "At karaoke night, an attractive guy passes you the secondary mic and starts a passionate love ballad duet.",
+        answers: [
+          { letter: "A", text: "Sing it ironically and try to crack up your friends.", score: 0 },
+          { letter: "B", text: "Sing your part casually and enjoy the classic tune.", score: 1 },
+          { letter: "C", text: "Lock eyes during the emotional chorus and feel real tension.", score: 2 },
+          { letter: "D", text: "Belting out the lyrics with 100% genuine romantic conviction.", score: 3 }
+        ]
+      },
+      {
+        id: 25,
+        topic: "The Barista Wink",
+        prompt: "The cute barista writes your name on your cup with a little heart and hands it over with a slow wink.",
+        answers: [
+          { letter: "A", text: "Assume it's standard customer service to boost tip jar numbers.", score: 0 },
+          { letter: "B", text: "Smile, take your coffee, and appreciate the pleasant gesture.", score: 1 },
+          { letter: "C", text: "Keep the coffee cup on your desk and over-analyze the heart curve.", score: 2 },
+          { letter: "D", text: "That is my future husband and I am showing up at 8 AM daily.", score: 3 }
+        ]
+      },
+      {
+        id: 26,
+        topic: "The One-Bed Airbnb",
+        prompt: "There is only one bed left at your weekend trip rental, and you have to share it with an attractive guy.",
+        answers: [
+          { letter: "A", text: "Build a solid pillow barricade down the center and sleep soundly.", score: 0 },
+          { letter: "B", text: "Laugh about the lack of furniture and crash normally.", score: 1 },
+          { letter: "C", text: "Lie awake for 45 minutes hyper-conscious of his body heat.", score: 2 },
+          { letter: "D", text: "Pray he rolls over in his sleep and spoons you.", score: 3 }
+        ]
+      },
+      {
+        id: 27,
+        topic: "The Cologne Check",
+        prompt: "A guy you find attractive leans his neck toward you and asks: 'Hey, does this new cologne smell good?'",
+        answers: [
+          { letter: "A", text: "Give a quick sniff from a foot away and answer honestly.", score: 0 },
+          { letter: "B", text: "Say it smells nice and ask what brand it is.", score: 1 },
+          { letter: "C", text: "Lean in closer than strictly necessary and inhale deeply.", score: 2 },
+          { letter: "D", text: "Completely lose the ability to form coherent sentences for 5 seconds.", score: 3 }
+        ]
+      },
+      {
+        id: 28,
+        topic: "The Arm Wrestling Match",
+        prompt: "At a game night, a handsome guy challenges you to an arm wrestle and interlocks your fingers with his.",
+        answers: [
+          { letter: "A", text: "Focus entirely on technique, leverage, and winning the match.", score: 0 },
+          { letter: "B", text: "Have fun competing regardless of the outcome.", score: 1 },
+          { letter: "C", text: "Get intensely distracted by his grip strength and forearm veins.", score: 2 },
+          { letter: "D", text: "Lose on purpose just to keep holding his hand a little longer.", score: 3 }
+        ]
+      },
+      {
+        id: 29,
+        topic: "The 2 AM Confession",
+        prompt: "Late at night after drinks, an attractive friend wraps his arm around you and says 'I really adore you, man'.",
+        answers: [
+          { letter: "A", text: "Laugh and hand him a glass of water to hydrate.", score: 0 },
+          { letter: "B", text: "Pat his back and say 'Love you too, bro'.", score: 1 },
+          { letter: "C", text: "Feel your pulse jump and wonder if there was subtext under it.", score: 2 },
+          { letter: "D", text: "Look into his eyes and say: 'Say that again tomorrow morning'.", score: 3 }
+        ]
+      },
+      {
+        id: 30,
+        topic: "The Voice Chat Whisper",
+        prompt: "A guy with a velvety, deep radio voice joins your gaming party and murmurs 'Relax, I've got you covered'.",
+        answers: [
+          { letter: "A", text: "Call out enemy positions and focus on the match objective.", score: 0 },
+          { letter: "B", text: "Appreciate having a competent teammate on communications.", score: 1 },
+          { letter: "C", text: "Mute your microphone so he doesn't hear your heavy breathing.", score: 2 },
+          { letter: "D", text: "Instantly lose all crosshair precision because of the sound of his voice.", score: 3 }
+        ]
+      },
+      {
+        id: 31,
+        topic: "The Airport Goodbye",
+        prompt: "A handsome male friend is leaving for six months, and wraps you in a deep, lingering departure hug.",
+        answers: [
+          { letter: "A", text: "Give him two solid back pats and tell him to stay in touch.", score: 0 },
+          { letter: "B", text: "Wish him safe travels and promise to catch up on video call.", score: 1 },
+          { letter: "C", text: "Hold onto the hug longer than customary with a knot in your chest.", score: 2 },
+          { letter: "D", text: "Resist the overwhelming urge to pull him back for a movie kiss at Gate 4.", score: 3 }
+        ]
+      },
+      {
+        id: 32,
+        topic: "The Pool Chicken Fight",
+        prompt: "At a pool gathering, an athletic guy invites you to hop on his shoulders for a chicken fight battle.",
+        answers: [
+          { letter: "A", text: "Jump up and aggressively push the rival opponents into the water.", score: 0 },
+          { letter: "B", text: "Have a blast laughing and splashing around.", score: 1 },
+          { letter: "C", text: "Notice how firm his shoulders feel and feel your cheeks warm up.", score: 2 },
+          { letter: "D", text: "Hope this pool battle continues undisturbed until sunrise.", score: 3 }
+        ]
+      },
+      {
+        id: 33,
+        topic: "The Dressing Room Opinion",
+        prompt: "You're shopping and a stylish guy pops his head out of the fitting room asking which shirt fits hotter.",
+        answers: [
+          { letter: "A", text: "Pick the blue one and keep browsing your own rack.", score: 0 },
+          { letter: "B", text: "Give constructive advice on sleeve length and color tone.", score: 1 },
+          { letter: "C", text: "Scan him head to toe and tell him both look unbelievably good.", score: 2 },
+          { letter: "D", text: "Offer to be his personal wardrobe consultant for the rest of his life.", score: 3 }
+        ]
+      },
+      {
+        id: 34,
+        topic: "The Flex Photo Request",
+        prompt: "A fit hiker asks if you can snap a photo of him flexing with the scenic mountain backdrop.",
+        answers: [
+          { letter: "A", text: "Take two shots and immediately hand back the phone.", score: 0 },
+          { letter: "B", text: "Frame the horizon nicely so his shot looks impressive.", score: 1 },
+          { letter: "C", text: "Take 25 photos from different angles admiring his muscle definition.", score: 2 },
+          { letter: "D", text: "Ask if he needs someone to pose with him as a couple next.", score: 3 }
+        ]
+      },
+      {
+        id: 35,
+        topic: "The Kitchen Knife Lesson",
+        prompt: "In a cooking workshop, a cute instructor stands behind you and guides your cutting hand with his over yours.",
+        answers: [
+          { letter: "A", text: "Focus on the chopping angle to avoid cutting your fingertips.", score: 0 },
+          { letter: "B", text: "Thank him for demonstrating proper culinary safety form.", score: 1 },
+          { letter: "C", text: "Get instantly flustered feeling his chest against your back.", score: 2 },
+          { letter: "D", text: "Completely forget what an onion is or what cooking means.", score: 3 }
+        ]
+      },
+      {
+        id: 36,
+        topic: "The Cold Camping Tent",
+        prompt: "The temperatures drop below freezing while camping, and a handsome guy suggests zip-connecting sleeping bags.",
+        answers: [
+          { letter: "A", text: "Put on an extra wool layer and stay in your own bag.", score: 0 },
+          { letter: "B", text: "Agree purely for thermodynamic hypothermia prevention.", score: 1 },
+          { letter: "C", text: "Agree with a nervous grin knowing you won't sleep a wink.", score: 2 },
+          { letter: "D", text: "Say 'I thought you'd never offer' and slide in with zero hesitation.", score: 3 }
+        ]
+      },
+      {
+        id: 37,
+        topic: "The Wedding Waltz",
+        prompt: "At a wedding celebration, an attractive guy playfully bows and extends his hand to pull you into a slow dance.",
+        answers: [
+          { letter: "A", text: "Politely chuckle and decline with a shake of the head.", score: 0 },
+          { letter: "B", text: "Do a funny goofy spin to amuse the people at the tables.", score: 1 },
+          { letter: "C", text: "Place your hand on his waist and realize it feels surprisingly intimate.", score: 2 },
+          { letter: "D", text: "Rest your chin against his shoulder and let the song carry you away.", score: 3 }
+        ]
+      },
+      {
+        id: 38,
+        topic: "The Club Whisper",
+        prompt: "Over deafening club music, a gorgeous guy leans in until his lips brush your ear, his warm breath on your neck.",
+        answers: [
+          { letter: "A", text: "Nod and shout back a quick reaction to what he said.", score: 0 },
+          { letter: "B", text: "Step back to hear better and keep dancing.", score: 1 },
+          { letter: "C", text: "Feel goosebumps erupt down your entire neck and spine.", score: 2 },
+          { letter: "D", text: "Lean right back against his jawline and whisper something spicy.", score: 3 }
+        ]
+      },
+      {
+        id: 39,
+        topic: "The Sidewalk Hand Brush",
+        prompt: "While walking together down the street, your knuckles and fingers repeatedly brush against his with every stride.",
+        answers: [
+          { letter: "A", text: "Shove your hands into your pockets without another thought.", score: 0 },
+          { letter: "B", text: "Notice it as normal tight-sidewalk movement and keep walking.", score: 1 },
+          { letter: "C", text: "Feel a little electric spark every time your knuckles collide.", score: 2 },
+          { letter: "D", text: "Subtly hook your pinky around his to see if he holds on.", score: 3 }
+        ]
+      },
+      {
+        id: 40,
+        topic: "The Rain Kiss Fantasy",
+        prompt: "If you could have a passionate, romantic kiss in the pouring rain right this second, who is pulling you in?",
+        answers: [
+          { letter: "A", text: "A woman, without any ambiguity.", score: 0 },
+          { letter: "B", text: "I could honestly picture different possibilities depending on the vibe.", score: 1 },
+          { letter: "C", text: "A handsome guy, or more than one gender.", score: 2 },
+          { letter: "D", text: "A gorgeous man, and it's not even a question.", score: 3 }
+        ]
+      },
+      {
+        id: 41,
+        topic: "The Couple TikTok Trend",
+        prompt: "A cute friend asks if you'll film an intimate slow-motion couple dance trend with him 'just for clout'.",
+        answers: [
+          { letter: "A", text: "Pass, social media trends aren't your cup of tea.", score: 0 },
+          { letter: "B", text: "Do a funny comedic version to laugh about later.", score: 1 },
+          { letter: "C", text: "Rehearse the moves with genuine passion and serious chemistry.", score: 2 },
+          { letter: "D", text: "Forget the algorithm, this is our official relationship launch.", score: 3 }
+        ]
+      },
+      {
+        id: 42,
+        topic: "The 1 AM Voice Memo",
+        prompt: "An attractive guy sends you a 1 AM voice message just saying: 'Hey... I was just thinking about you.'",
+        answers: [
+          { letter: "A", text: "Reply the next morning asking what he needed.", score: 0 },
+          { letter: "B", text: "Send back a friendly message asking if everything's good.", score: 1 },
+          { letter: "C", text: "Listen to the audio recording three times back-to-back smiling.", score: 2 },
+          { letter: "D", text: "Fall asleep clutching your phone like a lovesick teenager.", score: 3 }
+        ]
+      },
+      {
+        id: 43,
+        topic: "The Captivating Eyes",
+        prompt: "A handsome stranger looks directly into your eyes and says 'You have the most mesmerizing eyes I've ever seen.'",
+        answers: [
+          { letter: "A", text: "Say 'Thanks bro, good genetics I guess' and shrug.", score: 0 },
+          { letter: "B", text: "Smile warmly and appreciate the lovely gesture.", score: 1 },
+          { letter: "C", text: "Feel your heart do a complete gymnastic flip.", score: 2 },
+          { letter: "D", text: "Murmur: 'They look even better when they're looking at you.'", score: 3 }
+        ]
+      },
+      {
+        id: 44,
+        topic: "The Horror Movie Cuddle",
+        prompt: "Your friends are debating whether cuddling your homie under a blanket during a scary movie is valid.",
+        answers: [
+          { letter: "A", text: "Strictly forbidden, sit on separate ends of the sofa.", score: 0 },
+          { letter: "B", text: "Share the blanket if it's freezing, but keep a healthy buffer.", score: 1 },
+          { letter: "C", text: "Bro cuddles during a jump-scare are 100% acceptable.", score: 2 },
+          { letter: "D", text: "I watch horror movies exclusively for the protective homie cuddles.", score: 3 }
+        ]
+      },
+      {
+        id: 45,
+        topic: "The Raw Identity Truth",
+        prompt: "When you silence all external chatter and peer expectations, which romantic frequency calls to you?",
+        answers: [
+          { letter: "A", text: "Attraction toward women.", score: 0 },
+          { letter: "B", text: "Questioning, fluid, or currently exploring the spectrum.", score: 1 },
+          { letter: "C", text: "Bisexual, pansexual, or attracted to more than one gender.", score: 2 },
+          { letter: "D", text: "Attraction toward men, passionately and without apology.", score: 3 }
+        ]
+      }
+    ];
+
+    // Quiz State Management
+    class QuizApp {
+      constructor() {
+        this.questions = [];
+        this.currentIndex = 0;
+        this.userAnswers = {}; // { questionIndex: { score: number, optionIndex: number, isSkipped: boolean } }
+        this.isScanning = false;
+        this.gameRound = 1;
+        this.usedQuestionIds = new Set();
+
+        this.initDOM();
+        this.bindEvents();
+        this.initParticleCanvas();
+      }
+
+      initDOM() {
+        // Screens
+        this.welcomeScreen = document.getElementById('welcome-screen');
+        this.quizScreen = document.getElementById('quiz-screen');
+        this.scannerScreen = document.getElementById('scanner-screen');
+        this.resultScreen = document.getElementById('result-screen');
+
+        // Quiz elements
+        this.roundTag = document.getElementById('q-round-tag');
+        this.qNumDisplay = document.getElementById('current-q-num');
+        this.qPointsVal = document.getElementById('current-points-val');
+        this.progressBarFill = document.getElementById('progress-bar-fill');
+        this.scenarioTopic = document.getElementById('scenario-topic');
+        this.questionPrompt = document.getElementById('question-prompt-text');
+        this.answersContainer = document.getElementById('answers-container');
+        this.nextBtn = document.getElementById('quiz-next-btn');
+        this.backBtn = document.getElementById('quiz-back-btn');
+        this.skipBtn = document.getElementById('quiz-skip-btn');
+        this.restartTriggerBtn = document.getElementById('quiz-restart-trigger');
+
+        // Scanner elements
+        this.countdownDisplay = document.getElementById('countdown-display');
+
+        // Result elements
+        this.resultEmoji = document.getElementById('result-emoji');
+        this.resultTitle = document.getElementById('result-title-text');
+        this.finalScoreVal = document.getElementById('final-score-val');
+        this.meterFill = document.getElementById('meter-fill');
+        this.meterPercentLabel = document.getElementById('meter-percent-label');
+        this.resultDesc = document.getElementById('result-desc-text');
+        this.statAnswered = document.getElementById('stat-answered');
+        this.statAttraction = document.getElementById('stat-attraction');
+        this.statBromance = document.getElementById('stat-bromance');
+
+        // Modals
+        this.howModal = document.getElementById('how-modal');
+        this.restartModal = document.getElementById('restart-modal');
+        this.toastPill = document.getElementById('toast-pill');
+        this.toastMsg = document.getElementById('toast-msg');
+      }
+
+      bindEvents() {
+        // Sound toggle
+        const soundBtn = document.getElementById('sound-toggle');
+        const soundIcon = document.getElementById('sound-icon');
+        const soundLabel = document.getElementById('sound-label');
+
+        soundBtn.addEventListener('click', () => {
+          const isEnabled = sound.toggle();
+          if (isEnabled) {
+            soundBtn.classList.add('active');
+            soundIcon.textContent = '🔊';
+            soundLabel.textContent = 'Sound ON';
+            this.showToast('Sound effects enabled! 🎵');
+          } else {
+            soundBtn.classList.remove('active');
+            soundIcon.textContent = '🔇';
+            soundLabel.textContent = 'Sound OFF';
+            this.showToast('Sound muted');
+          }
+        });
+
+        // Brand logo click
+        document.getElementById('nav-brand').addEventListener('click', () => {
+          if (this.quizScreen.classList.contains('active')) {
+            this.openRestartModal();
+          } else {
+            this.showScreen('welcome-screen');
+          }
+        });
+
+        // FAQ / How it works buttons
+        document.getElementById('faq-btn').addEventListener('click', () => this.openHowModal());
+        document.getElementById('how-it-works-btn').addEventListener('click', () => this.openHowModal());
+        document.getElementById('close-how-modal').addEventListener('click', () => this.closeHowModal());
+        document.getElementById('modal-got-it-btn').addEventListener('click', () => this.closeHowModal());
+
+        // Welcome start button
+        document.getElementById('start-quiz-btn').addEventListener('click', () => {
+          sound.playClick();
+          this.startQuiz(false);
+        });
+
+        // Quiz navigation
+        this.nextBtn.addEventListener('click', () => this.handleNext());
+        this.backBtn.addEventListener('click', () => this.handleBack());
+        this.skipBtn.addEventListener('click', () => this.handleSkip());
+        this.restartTriggerBtn.addEventListener('click', () => this.openRestartModal());
+
+        // Restart confirmation modal
+        document.getElementById('confirm-restart-btn').addEventListener('click', () => {
+          this.closeRestartModal();
+          this.startQuiz(false);
+        });
+        document.getElementById('cancel-restart-btn').addEventListener('click', () => this.closeRestartModal());
+        document.getElementById('close-restart-modal').addEventListener('click', () => this.closeRestartModal());
+
+        // Result actions - play next round with fresh questions
+        document.getElementById('play-again-btn').addEventListener('click', () => {
+          sound.playClick();
+          this.startQuiz(true);
+        });
+        document.getElementById('share-result-btn').addEventListener('click', () => this.shareResult());
+
+        // Keyboard shortcuts
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            this.closeHowModal();
+            this.closeRestartModal();
+          }
+          if (this.quizScreen.classList.contains('active') && !this.howModal.classList.contains('open') && !this.restartModal.classList.contains('open')) {
+            if (['1', '2', '3', '4'].includes(e.key)) {
+              const idx = parseInt(e.key, 10) - 1;
+              this.selectAnswer(idx);
+            } else if (['a', 'b', 'c', 'd', 'A', 'B', 'C', 'D'].includes(e.key)) {
+              const mapping = { a: 0, b: 1, c: 2, d: 3, A: 0, B: 1, C: 2, D: 3 };
+              this.selectAnswer(mapping[e.key]);
+            } else if (e.key === 'Enter') {
+              if (!this.nextBtn.disabled) {
+                this.handleNext();
+              }
+            } else if (e.key === 'ArrowLeft' && !this.backBtn.disabled) {
+              this.handleBack();
+            }
+          }
+        });
+      }
+
+      showScreen(screenId) {
+        [this.welcomeScreen, this.quizScreen, this.scannerScreen, this.resultScreen].forEach(scr => {
+          if (scr.id === screenId) {
+            scr.classList.add('active');
+          } else {
+            scr.classList.remove('active');
+          }
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Shuffle helper with fresh copy
+      shuffleQuestions(array) {
+        const copy = JSON.parse(JSON.stringify(array));
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      // Draw non-repeating fresh questions from the 45-question pool
+      drawFreshQuestions(count = 15) {
+        let available = RAW_QUESTIONS.filter(q => !this.usedQuestionIds.has(q.id));
+        
+        // If the pool is exhausted or has fewer than 15 questions left, reset so we can cycle
+        if (available.length < count) {
+          this.usedQuestionIds.clear();
+          available = [...RAW_QUESTIONS];
+        }
+
+        const shuffled = this.shuffleQuestions(available);
+        const selected = shuffled.slice(0, count);
+
+        // Record selected question IDs to avoid repeats in consecutive games
+        selected.forEach(q => this.usedQuestionIds.add(q.id));
+
+        return selected;
+      }
+
+      startQuiz(isNextRound = false) {
+        if (isNextRound) {
+          this.gameRound++;
+        }
+        if (this.roundTag) {
+          this.roundTag.textContent = `ROUND ${this.gameRound}`;
+        }
+
+        this.questions = this.drawFreshQuestions(15);
+        this.currentIndex = 0;
+        this.userAnswers = {};
+        this.showScreen('quiz-screen');
+        this.renderCurrentQuestion();
+
+        if (this.gameRound > 1) {
+          this.showToast(`Round ${this.gameRound}: 15 fresh scenarios loaded! 🔄✨`);
+        }
+      }
+
+      renderCurrentQuestion() {
+        // Smoothly scroll to top of view on question change for mobile comfort
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const q = this.questions[this.currentIndex];
+        const qNumber = this.currentIndex + 1;
+        const totalQ = this.questions.length;
+
+        // Header and progress
+        this.qNumDisplay.textContent = qNumber < 10 ? `0${qNumber}` : `${qNumber}`;
+        const pct = ((qNumber - 1) / totalQ) * 100;
+        this.progressBarFill.style.width = `${pct}%`;
+        
+        // Calculate accumulated points so far
+        const currentPoints = this.calculateTotalScore().rawScore;
+        this.qPointsVal.textContent = currentPoints;
+
+        // Scenario & prompt
+        this.scenarioTopic.textContent = q.topic;
+        this.questionPrompt.textContent = q.prompt;
+
+        // Render Answer cards
+        this.answersContainer.innerHTML = '';
+        const savedAnswer = this.userAnswers[this.currentIndex];
+
+        q.answers.forEach((ans, idx) => {
+          const card = document.createElement('div');
+          card.className = 'answer-card';
+          card.setAttribute('role', 'radio');
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('aria-checked', 'false');
+          card.dataset.index = idx;
+
+          if (savedAnswer && savedAnswer.optionIndex === idx && !savedAnswer.isSkipped) {
+            card.classList.add('selected');
+            card.setAttribute('aria-checked', 'true');
+          }
+
+          card.innerHTML = `
+            <div class="card-letter">${ans.letter}</div>
+            <div class="card-content">
+              <div class="card-text">${ans.text}</div>
+            </div>
+            <div class="card-check">🔥</div>
+          `;
+
+          card.addEventListener('click', () => {
+            this.selectAnswer(idx);
+          });
+
+          card.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+              e.preventDefault();
+              this.selectAnswer(idx);
+            }
+          });
+
+          this.answersContainer.appendChild(card);
+        });
+
+        // Navigation state
+        this.backBtn.disabled = this.currentIndex === 0;
+        const isAnswered = savedAnswer !== undefined && !savedAnswer.isSkipped;
+        this.nextBtn.disabled = !isAnswered;
+
+        if (this.currentIndex === totalQ - 1) {
+          this.nextBtn.innerHTML = 'REVEAL RESULT 🔮';
+        } else {
+          this.nextBtn.innerHTML = 'NEXT QUESTION →';
+        }
+      }
+
+      selectAnswer(optionIdx) {
+        sound.playSelect();
+        const currentQ = this.questions[this.currentIndex];
+        const selectedOption = currentQ.answers[optionIdx];
+
+        // Store answer
+        this.userAnswers[this.currentIndex] = {
+          score: selectedOption.score,
+          optionIndex: optionIdx,
+          isSkipped: false
+        };
+
+        // Update cards visually
+        const cards = this.answersContainer.querySelectorAll('.answer-card');
+        cards.forEach((card, idx) => {
+          if (idx === optionIdx) {
+            card.classList.add('selected');
+            card.setAttribute('aria-checked', 'true');
+          } else {
+            card.classList.remove('selected');
+            card.setAttribute('aria-checked', 'false');
+          }
+        });
+
+        // Enable next button
+        this.nextBtn.disabled = false;
+
+        // Update current points
+        const currentPoints = this.calculateTotalScore().rawScore;
+        this.qPointsVal.textContent = currentPoints;
+      }
+
+      handleNext() {
+        sound.playNext();
+        if (this.currentIndex < this.questions.length - 1) {
+          this.currentIndex++;
+          this.renderCurrentQuestion();
+        } else {
+          // Final question done -> Trigger dramatic reveal
+          this.triggerDramaticReveal();
+        }
+      }
+
+      handleBack() {
+        sound.playClick();
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.renderCurrentQuestion();
+        }
+      }
+
+      handleSkip() {
+        sound.playClick();
+        // Mark as skipped
+        this.userAnswers[this.currentIndex] = {
+          score: 0,
+          optionIndex: -1,
+          isSkipped: true
+        };
+
+        if (this.currentIndex < this.questions.length - 1) {
+          this.currentIndex++;
+          this.renderCurrentQuestion();
+        } else {
+          this.triggerDramaticReveal();
+        }
+      }
+
+      calculateTotalScore() {
+        let totalScore = 0;
+        let answeredCount = 0;
+
+        Object.keys(this.userAnswers).forEach(key => {
+          const ans = this.userAnswers[key];
+          if (ans && !ans.isSkipped) {
+            totalScore += ans.score;
+            answeredCount++;
+          }
+        });
+
+        // Max possible raw score
+        const totalQuestions = this.questions.length;
+        // Normalized score out of 45 if user skipped some questions
+        let finalScore = totalScore;
+        if (answeredCount > 0 && answeredCount < totalQuestions) {
+          finalScore = Math.round((totalScore / (answeredCount * 3)) * (totalQuestions * 3));
+        }
+
+        return {
+          rawScore: totalScore,
+          finalScore: Math.min(45, Math.max(0, finalScore)),
+          answeredCount: answeredCount
+        };
+      }
+
+      triggerDramaticReveal() {
+        this.showScreen('scanner-screen');
+        this.progressBarFill.style.width = '100%';
+        let count = 3;
+        this.countdownDisplay.textContent = count;
+        sound.playCountTick();
+
+        const countInterval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            this.countdownDisplay.textContent = count;
+            sound.playCountTick();
+          } else {
+            clearInterval(countInterval);
+            this.countdownDisplay.textContent = '🔥';
+            sound.playFanfare();
+            setTimeout(() => {
+              this.showFinalResult();
+            }, 600);
+          }
+        }, 800);
+      }
+
+      showFinalResult() {
+        const { finalScore, answeredCount } = this.calculateTotalScore();
+        this.showScreen('result-screen');
+
+        // Confetti burst
+        this.launchConfetti();
+
+        // Score display
+        this.finalScoreVal.textContent = finalScore;
+        const percentage = Math.round((finalScore / 45) * 100);
+        this.meterFill.style.width = `${percentage}%`;
+        this.meterPercentLabel.textContent = `${percentage}% Quiz Vibe Intensity`;
+
+        // Result classification based on 0-14, 15-29, 30-45
+        let title = "";
+        let emoji = "";
+        let className = "";
+        let desc = "";
+        let bromanceText = "";
+        let attractionText = "";
+
+        if (finalScore <= 14) {
+          title = "STRAIGHT VIBES 💚";
+          emoji = "💚";
+          className = "straight";
+          desc = "Your answers landed in the low end of this quiz's attraction scale. Remember, only you know who you're attracted to.";
+          attractionText = "Cool & Collected 🧊";
+          bromanceText = "Pure Bromance 🤜🤛";
+        } else if (finalScore <= 29) {
+          title = "MIDDLE / EXPLORING VIBES 💜";
+          emoji = "💜";
+          className = "middle";
+          desc = "Plot twist! Your answers landed in the middle of the scale. Attraction can be complicated, and there's no rush to label yourself.";
+          attractionText = "Curious & Open ✨";
+          bromanceText = "Spicy Energy 🌶️";
+        } else {
+          title = "GAY VIBES 🩷";
+          emoji = "🩷";
+          className = "gay";
+          desc = "The rainbow radar is going wild! Your answers landed in the high end of this quiz's scale. Your score is just for fun, not a verdict on your identity.";
+          attractionText = "Maximum Voltage ⚡";
+          bromanceText = "Beyond Bros 💅";
+        }
+
+        this.resultTitle.textContent = title;
+        this.resultTitle.className = `result-title ${className}`;
+        this.resultEmoji.textContent = emoji;
+        this.resultDesc.textContent = desc;
+
+        // Breakdown stats
+        this.statAnswered.textContent = `${answeredCount} / 15`;
+        this.statAttraction.textContent = attractionText;
+        this.statBromance.textContent = bromanceText;
+      }
+
+      // Share feature with Web Share API or Clipboard Fallback
+      async shareResult() {
+        sound.playClick();
+        const { finalScore } = this.calculateTotalScore();
+        const title = this.resultTitle.textContent;
+        const shareText = `👀 I just took the GAY DETECTOR — Freaky Edition! 🌈🔥\n\n🎯 My Result: ${title}\n⚡ Score: ${finalScore} / 45 (${Math.round((finalScore / 45) * 100)}% vibe intensity)\n\nTake the 15-question quiz and check your vibe! (Just for fun entertainment)`;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: "GAY DETECTOR 👀 — Freaky Edition",
+              text: shareText,
+              url: window.location.href
+            });
+            this.showToast("Shared successfully! 🌈");
+            return;
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              this.copyToClipboard(shareText);
+            }
+          }
+        } else {
+          this.copyToClipboard(shareText);
+        }
+      }
+
+      copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            this.showToast("Result copied to clipboard! 📋✨");
+          }).catch(() => {
+            this.fallbackCopy(text);
+          });
+        } else {
+          this.fallbackCopy(text);
+        }
+      }
+
+      fallbackCopy(text) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          this.showToast("Result copied to clipboard! 📋✨");
+        } catch (e) {
+          this.showToast("Unable to copy automatically.");
+        }
+        document.body.removeChild(textarea);
+      }
+
+      showToast(msg) {
+        this.toastMsg.textContent = msg;
+        this.toastPill.classList.add('show');
+        setTimeout(() => {
+          this.toastPill.classList.remove('show');
+        }, 2800);
+      }
+
+      // Modal helpers
+      openHowModal() {
+        sound.playClick();
+        this.howModal.classList.add('open');
+      }
+      closeHowModal() {
+        this.howModal.classList.remove('open');
+      }
+
+      openRestartModal() {
+        sound.playClick();
+        this.restartModal.classList.add('open');
+      }
+      closeRestartModal() {
+        this.restartModal.classList.remove('open');
+      }
+
+      // Ambient dynamic stars and sparkles
+      initParticleCanvas() {
+        const canvas = document.getElementById('ambient-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const count = 45;
+        const colors = ['#ff2a85', '#a855f7', '#00f0ff', '#ffffff'];
+
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.8 + 0.6,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            alpha: Math.random() * 0.6 + 0.2,
+            pulseSpeed: Math.random() * 0.02 + 0.01
+          });
+        }
+
+        const render = () => {
+          ctx.clearRect(0, 0, width, height);
+          for (let p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.alpha += p.pulseSpeed;
+
+            if (p.alpha > 0.8 || p.alpha < 0.2) {
+              p.pulseSpeed = -p.pulseSpeed;
+            }
+
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = p.color;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+          requestAnimationFrame(render);
+        };
+        render();
+      }
+
+      // High-performance Confetti Cannon on Result Reveal
+      launchConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const confetti = [];
+        const colors = ['#ff2a85', '#ff55a3', '#a855f7', '#00f0ff', '#fbbf24', '#10b981', '#ffffff'];
+        const totalPieces = 120;
+
+        for (let i = 0; i < totalPieces; i++) {
+          confetti.push({
+            x: width * 0.5 + (Math.random() - 0.5) * 100,
+            y: height * 0.5,
+            w: Math.random() * 10 + 6,
+            h: Math.random() * 6 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            vx: (Math.random() - 0.5) * 16,
+            vy: (Math.random() * -14) - 4,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 12,
+            gravity: 0.35,
+            opacity: 1
+          });
+        }
+
+        let animationFrame;
+        const animateConfetti = () => {
+          ctx.clearRect(0, 0, width, height);
+          let alive = false;
+
+          for (let p of confetti) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += p.gravity;
+            p.vx *= 0.98;
+            p.rotation += p.rotationSpeed;
+            p.opacity -= 0.007;
+
+            if (p.opacity > 0 && p.y < height + 50) {
+              alive = true;
+              ctx.save();
+              ctx.translate(p.x, p.y);
+              ctx.rotate((p.rotation * Math.PI) / 180);
+              ctx.fillStyle = p.color;
+              ctx.globalAlpha = Math.max(0, p.opacity);
+              ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+              ctx.restore();
+            }
+          }
+
+          if (alive) {
+            animationFrame = requestAnimationFrame(animateConfetti);
+          } else {
+            ctx.clearRect(0, 0, width, height);
+          }
+        };
+
+        animateConfetti();
+      }
+    }
+
+    // Initialize App once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      window.gayDetector = new QuizApp();
+    });
+  </script>
+</body>
+</html>
